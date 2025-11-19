@@ -1,0 +1,25 @@
+{
+  "name": "dispatch",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "tsx --watch src/main.ts",
+    "generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
+    "migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
+    "migrate:undo": "drizzle-kit migrate:undo --config=src/db/drizzle.config.ts",
+    "migrate:status": "drizzle-kit migrate:status --config=src/db/drizzle.config.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "drizzle-kit": "^0.31.7",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.7",
+    "hono": "^4.10.6",
+    "postgres": "^3.4.7"
+  }
+}
