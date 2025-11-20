@@ -3,8 +3,13 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "imports": {
+    "#db/*": "./src/db/*",
+    "#route/*": "./src/route/*"
+  },
   "scripts": {
-    "dev": "tsx --watch src/main.ts",
+    "dev": "bun --hot src/index.ts",
+    "type": "bunx tsc",
     "generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
     "migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
     "migrate:undo": "drizzle-kit migrate:undo --config=src/db/drizzle.config.ts",
@@ -18,9 +23,11 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@hono/zod-validator": "^0.7.5",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
     "hono": "^4.10.6",
-    "postgres": "^3.4.7"
+    "postgres": "^3.4.7",
+    "zod": "^4.1.12"
   }
 }

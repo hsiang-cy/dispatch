@@ -1,16 +1,17 @@
 import { Hono } from 'hono'
-import sql from './db/connect.js'
+import { prettyJSON } from 'hono/pretty-json'
+import userRoute from '#route/user/user.route.ts'
 
-
-console.table((await sql`select 1 as number`).columns);
-
+console.log('App haha.')
 const app = new Hono()
 
-app
-    .get('/', (c) => c.text('Hello Bun!'))
-    .get('/test', async (c) => {
-        const users = await sql`select 1 as number`
-        return c.json(users)
-    })
+// middleware
+// app.use('*', prettyJSON())
+
+
+// routes
+app.route('/api/user', userRoute)
+    .get('/', (c) => c.json({ message: 'Hello from /api' }))
 
 export default app
+
