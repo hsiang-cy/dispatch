@@ -33,7 +33,7 @@ export const user = pgTable('user', {
     account: text('account').unique().notNull(),
     password: text('password').notNull(),
     name: text('name').notNull(),
-    email: text('email'),
+    email: text('email').notNull().unique(),
     phone: text('phone'),
     created_at: timestamp('created_at').defaultNow().notNull(),
     updated_at: timestamp('updated_at').defaultNow().notNull(),
