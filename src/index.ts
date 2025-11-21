@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
-import userRoute from '#route/user/user.route.ts'
+import { userRoute, vehicleRoute } from '#route/route.index.ts'
 import { drizzleORM } from '#db'
 import { sql } from 'drizzle-orm'
-import { loginCheck } from '#middleware'
+import { loginCheck } from './utils/middleware/index.ts'
 
 // 測試資料庫連線
 try {
@@ -22,7 +22,7 @@ const app = new Hono()
             errorMessage: err.message,
         })
         return c.json({
-            message: '伺服器錯誤',
+            message: 'server error',
             error: err.message,
         }, 500)
     })
@@ -30,12 +30,13 @@ const app = new Hono()
     // user route    
     .route('/api/user', userRoute)
 
-    // 需要登入的 ↓↓↓↓↓↓↓↓↓
-    .use(loginCheck)
+    .use(loginCheck) // 需要登入的 ↓↓↓↓↓↓↓↓↓
+
+    // vehicle route
+    .route('/api/vehicle', vehicleRoute)
 
 
-
-    // routes
+    // jwt test
     .get('loginCheckCheck', (c) => c.json(c.get('jwtPayload')))
 
 export default app

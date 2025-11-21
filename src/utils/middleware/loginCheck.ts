@@ -1,8 +1,8 @@
-import { createMiddleware } from "hono/factory";
+import { factory, type JwtPayload } from '../factory.ts';
 import { HTTPException } from 'hono/http-exception'
-import { decode, verify } from 'hono/jwt'
+import { verify } from 'hono/jwt'
 
-export const loginCheck = createMiddleware(async (c, next) => {
+export const loginCheck = factory.createMiddleware(async (c, next) => {
     const authHeader = c.req.header('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return c.json({ message: 'Authorization Error' }, 401);
@@ -14,7 +14,7 @@ export const loginCheck = createMiddleware(async (c, next) => {
     try {
         const payload = await verify(token, jwtKey);
 
-        c.set('jwtPayload', payload);
+        c.set('jwtPayload', payload as JwtPayload);
 
         await next();
     } catch (e) {

@@ -1,12 +1,11 @@
-import { Hono } from "hono";
+import { factory } from "../../../utils/factory.ts";
 import { drizzleORM, schema } from "#db";
 
-export const addVehicle = new Hono()
-    // .post('/', async (c) => {
-    //     const data = await c.req.json();
-    //     // const add = await drizzleORM.insert(schema.vehicle).values({
-            
-    //     // })
+export const addVehicle = factory.createApp()
+    .post('/', async (c) => {
+        const data = await c.req.json();
+        const jwtPayload = c.get('jwtPayload');
 
-    //     return c.json({ message: 'Vehicle created', data: body }, 201);
-    // });
+
+        return c.json({ message: 'Vehicle created'}, 201);
+    });

@@ -4,7 +4,7 @@ import { eq, or, and } from 'drizzle-orm'
 import { HTTPException } from 'hono/http-exception'
 import { sign } from 'hono/jwt'
 
-const userRoute = new Hono()
+export const userRoute = new Hono()
 
 
     // POST /api/register
@@ -60,6 +60,7 @@ const userRoute = new Hono()
         const payload = {
             account: user[0]?.account,
             email: user[0]?.email,
+            userId: user[0]?.id,
         }
         const secret = process.env.JWT_SECRET as string
         const token = await sign(payload, secret)
@@ -88,5 +89,3 @@ const userRoute = new Hono()
             method: c.req.method
         })
     })
-
-export default userRoute

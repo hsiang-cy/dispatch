@@ -6,7 +6,8 @@
   "imports": {
     "#db": "./src/db/drizzleORM.export.ts",
     "#route/*": "./src/route/*",
-    "#middleware": "./src/middleware/index.ts"
+    "#middleware": "./src/middleware/index.ts",
+    "#types": "./src/utils/types.ts"
   },
   "scripts": {
     "dev": "bun --hot src/index.ts",
