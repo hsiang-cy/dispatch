@@ -29,6 +29,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@hono/standard-validator": "^0.2.0",
     "@hono/zod-validator": "^0.7.5",
     "@scalar/hono-api-reference": "^0.9.25",
     "@sinclair/typebox": "^0.34.41",

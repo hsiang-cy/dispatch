@@ -1,40 +1,73 @@
-import { drizzleORM, schema } from '#db'
-import { eq, or, and } from 'drizzle-orm'
 import { HTTPException } from 'hono/http-exception'
+import { drizzleORM, schema } from '#db'
+import { eq, or } from 'drizzle-orm'
+import { describeRoute } from 'hono-openapi'
+import { validator, resolver } from 'hono-openapi'
 import { factory } from '#factory'
 
-export const registerHandlers = factory.createHandlers(async (c) => {
-    const { account, password, email, name } = await c.req.json()
-    const existingUser = await drizzleORM
-        .select().from(schema.user)
-        .where(or(
-            eq(schema.user.account, account),
-            eq(schema.user.email, email),
-        ))
-        .limit(1)
-    if (existingUser.length > 0) {
-        throw new HTTPException(400, { message: '帳號或電子郵件已存在' })
-    }
-    const createNewUser = await drizzleORM
-        .insert(schema.user)
-        .values({
-            account,
-            password,
-            email,
-            name
-        })
-        .returning()
+import {
+    type RegisterRequest,
+    type RegisterResponse,
+    type RegisterError,
+    RegisterRequestSchema,
+    RegisterResponseSchema,
+} from '../dto/0010.register.dto.ts'
 
-    // xh localhost:3000/api/user/register name=hi email=hi@mail account=hi password=pass
+import { ErrorSchema } from '../dto/shared_type.ts'
 
-    return c.json({
-        message: '使用者註冊成功',
-        data: {
-            account: createNewUser[0]?.account,
-            email: createNewUser[0]?.email,
-            name: createNewUser[0]?.name,
+export const registerHandlers = factory.createHandlers(
+    describeRoute({
+        description: '註冊新使用者',
+        tags: ['User'],
+        responses: {
+            201: {
+                description: '註冊成功',
+                content: {
+                    'application/json': { schema: resolver(RegisterResponseSchema) }
+                }
+            },
+            400: {
+                description: '驗證失敗或帳號已存在',
+                content: {
+                    'application/json': { schema: resolver(ErrorSchema) }
+                }
+            }
         }
-    }, 201)
-})
+    }),
 
+    validator('json', RegisterRequestSchema),
+    async (c) => {
+        const { account, password, email, name } = c.req.valid('json')
 
+        const existingUser = await drizzleORM
+            .select().from(schema.user)
+            .where(or(
+                eq(schema.user.account, account),
+                eq(schema.user.email, email),
+            ))
+            .limit(1)
+
+        if (existingUser.length > 0) {
+            throw new HTTPException(400, { message: '帳號或電子郵件已存在' })
+        }
+
+        const createNewUser = await drizzleORM
+            .insert(schema.user)
+            .values({
+                account,
+                password,
+                email,
+                name
+            })
+            .returning()
+
+        return c.json({
+            message: '使用者註冊成功',
+            data: {
+                account: createNewUser[0]?.account,
+                email: createNewUser[0]?.email,
+                name: createNewUser[0]?.name,
+            }
+        }, 201)
+    }
+)
