@@ -29,10 +29,13 @@
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.5",
+    "@scalar/hono-api-reference": "^0.9.25",
     "@sinclair/typebox": "^0.34.41",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
+    "drizzle-typebox": "^0.3.3",
     "hono": "^4.10.6",
+    "hono-openapi": "^1.1.1",
     "pino": "^10.1.0",
     "postgres": "^3.4.7"
   }
