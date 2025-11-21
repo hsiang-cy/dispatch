@@ -1,7 +1,7 @@
 import { Hono } from "hono";
-import { register } from "./api/001.register.ts";
-import { login } from "./api/002.login.ts";
+import { registerHandlers } from "./api/0010.register.ts";
+import { loginHandlers } from "./api/0020.login.ts";
 
 export const userRoute = new Hono()
-    .route('/register', register)
-    .route('/login', login)
+    .post('/register', ...registerHandlers)
+    .post('/login', ...loginHandlers)
