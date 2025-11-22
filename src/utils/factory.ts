@@ -1,9 +1,10 @@
 import { createFactory } from 'hono/factory'
+import type { JWTPayload } from '#middleware'
 
-export type JwtPayload = {
-    userId: number;
-    email: string;
-    account: string;
+export type JWTPayload = {
+    userId: number,
+    account: string,
+    exp: number,
 }
 
-export const factory = createFactory<{ Variables: { jwtPayload: JwtPayload } }>()
+export const factory = createFactory<{ Variables: { jwtPayload: JWTPayload } }>()

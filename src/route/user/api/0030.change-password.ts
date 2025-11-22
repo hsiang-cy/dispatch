@@ -20,7 +20,7 @@ export const changePasswordHandlers = factory.createHandlers(
 
             const [user] = await drizzleORM
                 .select().from(schema.user)
-                .where(eq(schema.user.id, payload.id))
+                .where(eq(schema.user.id, payload.userId))
                 .limit(1)
 
             if (!user || user.password !== oldPassword) {
@@ -30,14 +30,14 @@ export const changePasswordHandlers = factory.createHandlers(
             await drizzleORM
                 .update(schema.user)
                 .set({ password: newPassword })
-                .where(eq(schema.user.id, payload.id))
+                .where(eq(schema.user.id, payload.userId))
 
             return c.json({
                 message: '密碼已成功更新'
             })
         } catch (e) {
             console.error('/api/user/change-password 錯誤：', e)
-            throw new HTTPException(500, { message: '更新密碼時資料庫錯誤' })
+            throw new HTTPException(500, { message: '更新密碼時發生錯誤' })
         }
     }
 )
