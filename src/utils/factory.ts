@@ -1,7 +1,7 @@
 import { createFactory } from 'hono/factory'
 
 export type JwtPayload = {
-    userId: string;
+    userId: number;
     email: string;
     account: string;
 }

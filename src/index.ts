@@ -2,7 +2,9 @@ import { Hono } from 'hono'
 import { userRoute, vehicleRoute } from '#route/route.index.ts'
 import { drizzleORM } from '#db'
 import { sql } from 'drizzle-orm'
-import { loginCheck } from './utils/middleware/index.ts'
+import { jwtAuth } from '#middleware'
+import { HTTPException } from 'hono/http-exception'
+
 
 import { openApiDoc } from './openapi.ts'
 import { Scalar } from '@scalar/hono-api-reference'
@@ -28,16 +30,17 @@ const app = new Hono()
             method: c.req.method,
             errorMessage: err.message,
         })
+        const status = (err instanceof HTTPException) ? err.status : 500
         return c.json({
             message: 'server error',
             error: err.message,
-        }, 500)
+        }, status)
     })
 
     // user route    
     .route('/api/user', userRoute)
 
-    .use(loginCheck) // 需要登入的 ↓↓↓↓↓↓↓↓↓
+    .use(jwtAuth) // 需要登入的 ↓↓↓↓↓↓↓↓↓
 
     // vehicle route
     .route('/api/vehicle', vehicleRoute)

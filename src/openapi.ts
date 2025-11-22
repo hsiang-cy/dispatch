@@ -1,5 +1,7 @@
 import {
-    registerOpenApiPath
+    registerOpenApiPath,
+    loginOpenApiPath,
+    changePasswordOpenApiPath
 } from '#route/route.index.ts'
 
 export const openApiDoc = {
@@ -7,11 +9,22 @@ export const openApiDoc = {
     info: { title: 'Dispatch API 文檔', version: '1.0.0' },
     servers: [
         {
-            url: 'http://localhost:3040',
+            url: 'http://localhost:3000',
             description: '開發環境'
         }
     ],
     paths: {
-        ...registerOpenApiPath
-    }
+        ...registerOpenApiPath,
+        ...loginOpenApiPath,
+        ...changePasswordOpenApiPath
+    },
+    components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+            },
+        },
+    },
 }

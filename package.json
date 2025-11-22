@@ -7,7 +7,7 @@
     "#index": "./src/index.ts",
     "#db": "./src/db/drizzleORM.export.ts",
     "#route/*": "./src/route/*",
-    "#middleware": "./src/middleware/index.ts",
+    "#middleware": "./src/utils/middleware/index.ts",
     "#types": "./src/utils/types.ts",
     "#factory": "./src/utils/factory.ts"
   },
@@ -39,6 +39,7 @@
     "drizzle-typebox": "^0.3.3",
     "hono": "^4.10.6",
     "hono-openapi": "^1.1.1",
+    "jsonwebtoken": "^9.0.2",
     "pino": "^10.1.0",
     "postgres": "^3.4.7"
   }

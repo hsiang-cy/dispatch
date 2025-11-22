@@ -1,1 +1,1 @@
-export { loginCheck } from './loginCheck.ts';
+export { jwtAuth, type JWTPayload } from './jwt.ts';
