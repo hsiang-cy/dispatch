@@ -1,14 +1,11 @@
 import { HTTPException } from 'hono/http-exception'
 import { drizzleORM, schema } from '#db'
 import { eq, or } from 'drizzle-orm'
-import { describeRoute } from 'hono-openapi'
-import { validator, resolver } from 'hono-openapi'
+import { tbValidator } from '@hono/typebox-validator'
+
 import { factory } from '#factory'
 
 import {
-    type RegisterRequest,
-    type RegisterResponse,
-    type RegisterError,
     RegisterRequestSchema,
     RegisterResponseSchema,
 } from '../dto/0010.register.dto.ts'
@@ -16,28 +13,9 @@ import {
 import { ErrorSchema } from '../dto/shared_type.ts'
 
 export const registerHandlers = factory.createHandlers(
-    describeRoute({
-        description: '註冊新使用者',
-        tags: ['User'],
-        responses: {
-            201: {
-                description: '註冊成功',
-                content: {
-                    'application/json': { schema: resolver(RegisterResponseSchema) }
-                }
-            },
-            400: {
-                description: '驗證失敗或帳號已存在',
-                content: {
-                    'application/json': { schema: resolver(ErrorSchema) }
-                }
-            }
-        }
-    }),
-
-    validator('json', RegisterRequestSchema),
+    tbValidator("json", RegisterRequestSchema),
     async (c) => {
-        const { account, password, email, name } = c.req.valid('json')
+        const { account, password, email, name } = c.req.valid('json') as typeof RegisterRequestSchema
 
         const existingUser = await drizzleORM
             .select().from(schema.user)

@@ -1,2 +1,4 @@
+export { userRoute, registerOpenApiPath } from "./user/user.index.ts";
+
 export { vehicleRoute } from "./vehicle/index.ts";
-export { userRoute } from "./user/index.ts";
+

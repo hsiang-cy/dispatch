@@ -1,4 +1,6 @@
 import { Type, type Static } from "@sinclair/typebox";
+// TypeCompiler
+
 import { AccountSchema, PasswordSchema, EmailSchema, NameSchema, resDataSchema, ErrorSchema } from "./shared_type.ts";
 
 export const RegisterRequestSchema = Type.Object({
@@ -18,6 +20,43 @@ export const RegisterResponseSchema = Type.Object({
     $id: 'RegisterResponse',
     title: 'Register Response'
 })
+
+export const registerOpenApiPath = {
+    '/api/user/register': {
+        post: {
+            tags: ['User'],
+            summary: '註冊',
+            description: '建立的使用者帳號',
+            requestBody: {
+                required: true,
+                content: {
+                    'application/json': {
+                        schema: RegisterRequestSchema
+                    }
+                }
+            },
+            responses: {
+                '201': {
+                    description: '註冊成功',
+                    content: {
+                        'application/json': {
+                            schema: RegisterResponseSchema
+                        }
+                    }
+                },
+                '400': {
+                    description: '帳號或電子郵件已存在',
+                    content: {
+                        'application/json': {
+                            // schema: { $ref: '#/components/schemas/Error' }
+                            schema: ErrorSchema
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 export type RegisterRequest = Static<typeof RegisterRequestSchema>
 export type RegisterResponse = Static<typeof RegisterResponseSchema>
