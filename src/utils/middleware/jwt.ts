@@ -1,8 +1,12 @@
 import { createMiddleware } from 'hono/factory'
 import { verify } from 'hono/jwt'
 import { HTTPException } from 'hono/http-exception'
-import { type JWTPayload } from '#factory'
 
+export type JWTPayload = {
+    id: number,
+    account: string,
+    exp: number,
+}
 
 export const jwtAuth = createMiddleware(async (c, next) => {
     const authHeader = c.req.header('Authorization')

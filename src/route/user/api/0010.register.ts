@@ -42,6 +42,7 @@ export const registerHandlers = factory.createHandlers(
         return c.json({
             message: '使用者註冊成功',
             data: {
+                id: createNewUser[0]?.id,
                 account: createNewUser[0]?.account,
                 email: createNewUser[0]?.email,
                 name: createNewUser[0]?.name,

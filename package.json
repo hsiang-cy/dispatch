@@ -17,8 +17,7 @@
     "generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
     "migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
     "migrate:undo": "drizzle-kit migrate:undo --config=src/db/drizzle.config.ts",
-    "migrate:status": "drizzle-kit migrate:status --config=src/db/drizzle.config.ts",
-    "test": "vitest run"
+    "migrate:status": "drizzle-kit migrate:status --config=src/db/drizzle.config.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -26,7 +25,8 @@
     "drizzle-kit": "^0.31.7",
     "pino-pretty": "^13.1.2",
     "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.13"
   },
   "dependencies": {
     "@hono/standard-validator": "^0.2.0",

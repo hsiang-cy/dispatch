@@ -1,6 +1,6 @@
 import { HTTPException } from 'hono/http-exception'
 import { drizzleORM, schema } from '#db'
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { tbValidator } from '@hono/typebox-validator'
 import { sign } from 'hono/jwt'
 
@@ -22,7 +22,10 @@ export const loginHandlers = factory.createHandlers(
                 account: schema.user.account,
                 password: schema.user.password,
             }).from(schema.user)
-            .where(eq(schema.user.account, account))
+            .where(and(
+                eq(schema.user.account, account),
+                eq(schema.user.status, 'active')
+            ))
             .limit(1)
 
         if (!user || user.password !== password) {

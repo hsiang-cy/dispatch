@@ -15,12 +15,12 @@ export const changePasswordHandlers = factory.createHandlers(
     tbValidator("json", ChangePasswordRequestSchema),
     async (c) => {
         try {
-            const payload = c.get('jwtPayload')
+            const { id } = c.get('jwtPayload')
             const { oldPassword, newPassword } = c.req.valid('json')
 
             const [user] = await drizzleORM
                 .select().from(schema.user)
-                .where(eq(schema.user.id, payload.userId))
+                .where(eq(schema.user.id, id))
                 .limit(1)
 
             if (!user || user.password !== oldPassword) {
@@ -30,12 +30,15 @@ export const changePasswordHandlers = factory.createHandlers(
             await drizzleORM
                 .update(schema.user)
                 .set({ password: newPassword })
-                .where(eq(schema.user.id, payload.userId))
+                .where(eq(schema.user.id, id))
 
             return c.json({
                 message: '密碼已成功更新'
             })
         } catch (e) {
+            if (e instanceof HTTPException) {
+                throw e
+            }
             console.error('/api/user/change-password 錯誤：', e)
             throw new HTTPException(500, { message: '更新密碼時發生錯誤' })
         }
