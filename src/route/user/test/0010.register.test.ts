@@ -6,14 +6,13 @@ import { HTTPException } from 'hono/http-exception'
 import { registerHandlers } from '../api/0010.register.ts'
 import { type RegisterResponse } from '../dto/0010.register.dto.ts'
 
-// Helper function to generate random user data
 const generateRandomUserData = () => {
-    const randomSuffix = Math.random().toString(36).substring(2, 15);
+    const random = Math.random().toString(36).substring(2, 15);
     return {
-        account: `testuser_${randomSuffix}`,
+        account: `testuser_${random}`,
         password: 'password123',
-        email: `test_${randomSuffix}@example.com`,
-        name: `Test User ${randomSuffix}`,
+        email: `test_${random}@example.com`,
+        name: `Test User ${random}`,
     };
 };
 
@@ -21,7 +20,6 @@ describe('POST /register 註冊', () => {
     const app = new Hono()
 
     beforeEach(async () => {
-        // Clear the user table before each test to ensure test isolation
         await drizzleORM.delete(schema.user).execute();
     });
 
@@ -61,21 +59,19 @@ describe('POST /register 註冊', () => {
     it('重複註冊 account, 應該回傳 400', async () => {
         const userData = generateRandomUserData();
 
-        // First registration
         await app.request('/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData),
         })
 
-        // Second registration with duplicate account
         const res = await app.request('/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                account: userData.account, // Duplicate account
+                account: userData.account,
                 password: userData.password,
-                email: generateRandomUserData().email, // Different email
+                email: generateRandomUserData().email,
                 name: userData.name,
             }),
         })
@@ -90,21 +86,19 @@ describe('POST /register 註冊', () => {
     it('重複註冊 email, 應該回傳 400', async () => {
         const userData = generateRandomUserData();
 
-        // First registration
         await app.request('/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(userData),
         })
 
-        // Second registration with duplicate email
         const res = await app.request('/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                account: generateRandomUserData().account, // Different account
+                account: generateRandomUserData().account,
                 password: userData.password,
-                email: userData.email, // Duplicate email
+                email: userData.email,
                 name: userData.name,
             }),
         })

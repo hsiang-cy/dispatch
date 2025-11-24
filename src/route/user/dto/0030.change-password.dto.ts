@@ -16,6 +16,9 @@ export const ChangePasswordResponseSchema = Type.Object({
     title: 'Change Password Response'
 })
 
+export type ChangePasswordRequest = Static<typeof ChangePasswordRequestSchema>
+export type ChangePasswordResponse = Static<typeof ChangePasswordResponseSchema>
+
 export const changePasswordOpenApiPath = {
     '/api/user/change-password': {
         put: {
@@ -61,5 +64,3 @@ export const changePasswordOpenApiPath = {
     }
 }
 
-export type ChangePasswordRequest = Static<typeof ChangePasswordRequestSchema>
-export type ChangePasswordResponse = Static<typeof ChangePasswordResponseSchema>

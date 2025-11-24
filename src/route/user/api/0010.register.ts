@@ -6,6 +6,7 @@ import { tbValidator } from '@hono/typebox-validator'
 import { factory } from '#factory'
 
 import {
+    type RegisterRequest,
     RegisterRequestSchema,
     RegisterResponseSchema,
 } from '../dto/0010.register.dto.ts'
@@ -15,7 +16,7 @@ import { ErrorSchema } from '../dto/shared_type.ts'
 export const registerHandlers = factory.createHandlers(
     tbValidator("json", RegisterRequestSchema),
     async (c) => {
-        const { account, password, email, name } = c.req.valid('json') as typeof RegisterRequestSchema
+        const { account, password, email, name } = c.req.valid('json') as  RegisterRequest
 
         const existingUser = await drizzleORM
             .select().from(schema.user)

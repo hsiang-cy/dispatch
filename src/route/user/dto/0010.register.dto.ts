@@ -1,4 +1,4 @@
-import { Type, type Static } from "@sinclair/typebox";
+import { Type } from 'typebox'
 // TypeCompiler
 
 import { AccountSchema, PasswordSchema, EmailSchema, NameSchema, resDataSchema, ErrorSchema } from "./shared_type.ts";
@@ -20,6 +20,10 @@ export const RegisterResponseSchema = Type.Object({
     $id: 'RegisterResponse',
     title: 'Register Response'
 })
+
+export type RegisterRequest = Type.Static<typeof RegisterRequestSchema>
+export type RegisterResponse = Type.Static<typeof RegisterResponseSchema>
+export type RegisterError = Type.Static<typeof ErrorSchema>
 
 export const registerOpenApiPath = {
     '/api/user/register': {
@@ -58,6 +62,3 @@ export const registerOpenApiPath = {
     }
 }
 
-export type RegisterRequest = Static<typeof RegisterRequestSchema>
-export type RegisterResponse = Static<typeof RegisterResponseSchema>
-export type RegisterError = Static<typeof ErrorSchema>
