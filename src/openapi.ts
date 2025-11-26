@@ -5,7 +5,7 @@ import {
 } from '#route/route.index.ts'
 
 export const openApiDoc = {
-    openapi: '3.0.0',
+    openapi: '3.1.0',
     info: { title: 'Dispatch API 文檔', version: '1.0.0' },
     servers: [
         {

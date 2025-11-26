@@ -9,7 +9,8 @@
     "#route/*": "./src/route/*",
     "#middleware": "./src/utils/middleware/index.ts",
     "#types": "./src/utils/types.ts",
-    "#factory": "./src/utils/factory.ts"
+    "#factory": "./src/utils/factory.ts",
+    "#helpers/*": "./src/utils/helpers/*"
   },
   "scripts": {
     "dev": "bun --hot src/index.ts",

@@ -11,8 +11,6 @@ import {
     RegisterResponseSchema,
 } from '../dto/0010.register.dto.ts'
 
-import { ErrorSchema } from '../dto/shared_type.ts'
-
 export const registerHandlers = factory.createHandlers(
     tbValidator("json", RegisterRequestSchema),
     async (c) => {
@@ -51,3 +49,4 @@ export const registerHandlers = factory.createHandlers(
         }, 201)
     }
 )
+

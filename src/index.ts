@@ -20,7 +20,7 @@ try {
 
 const app = new Hono()
     .get('/test', (c) => c.text('test succesful'))
-    
+
     .get('/doc', (c) => c.json(openApiDoc))
     .get('/scalar', Scalar({ url: '/doc', theme: 'purple' }))
 
@@ -30,20 +30,23 @@ const app = new Hono()
             method: c.req.method,
             errorMessage: err.message,
         })
-        const status = (err instanceof HTTPException) ? err.status : 500
+        if (!(err instanceof HTTPException)) {
+            return c.json({ message: 'unknown error' }, 500)
+        }
+        const { message, cause, status } = err
         return c.json({
-            message: 'server error',
-            error: err.message,
+            message,
+            error:cause,
         }, status)
     })
 
     // user route    
     .route('/api/user', userRoute)
 
-    .use(jwtAuth) // 需要登入的 ↓↓↓↓↓↓↓↓↓
-
     // vehicle route
     .route('/api/vehicle', vehicleRoute)
+    .use(jwtAuth) // 需要登入的 ↓↓↓↓↓↓↓↓↓
+
 
 
     // jwt test

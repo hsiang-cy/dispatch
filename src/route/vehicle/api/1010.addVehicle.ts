@@ -1,14 +1,37 @@
-import { factory } from "../../../utils/factory.ts";
+import { factory } from "#factory";
+import { requestParamsCheck } from "#helpers/formatTypeboxCheckError.ts";
+import { HTTPException } from 'hono/http-exception'
 import { drizzleORM, schema } from "#db";
+import {
+    AddVehicleRequestValidator,
+    type AddVehicleRequest
+} from '../dto/1010.addVehicle.dto.ts'
 
-export const addVehicle = factory.createApp()
-//     .post('/', async (c) => {
-//         const data = await c.req.json();
-//         const jwtPayload = c.get('jwtPayload');
+export const addVehicle = factory.createHandlers(async (c) => {
+    const req = await c.req.json() as unknown;
 
+    const data = requestParamsCheck(req, AddVehicleRequestValidator);
+    try {
+        const jwtPayload = c.get('jwtPayload');
 
-//         return c.json({
-//             message: 'Vehicle created',
-//             user: `${jwtPayload.account}`
-//         }, 201);
-//     });
+        const result = await drizzleORM
+            .insert(schema.vehicle)
+            .values({
+                user_id: jwtPayload?.id ?? 144,
+                vehicle_number: data.vehicleNumber,
+                vehicle_type: data.vehicleType,
+                capacity: data.capacity,
+                max_distance: data.maxDistance,
+                depot_id: data.depotId
+            })
+            .returning()
+
+        return c.json({
+            message: '建立成功',
+            data: result[0]?.id
+        }, 201);
+    } catch (e: any) {
+        console.log('/api/vehicle/addVehicle 錯誤：', e )
+        throw new HTTPException(403, { message: '資料庫錯誤', cause: e.message })
+    }
+})
