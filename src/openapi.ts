@@ -1,7 +1,12 @@
 import {
     registerOpenApiPath,
     loginOpenApiPath,
-    changePasswordOpenApiPath
+    changePasswordOpenApiPath,
+    destinationRoute,
+    addDestinationOpenApiPath,
+    getDestinationOpenApiPath,
+    updateDestinationOpenApiPath,
+    deleteDestinationOpenApiPath
 } from '#route/route.index.ts'
 
 export const openApiDoc = {
@@ -14,9 +19,17 @@ export const openApiDoc = {
         }
     ],
     paths: {
+        // user
         ...registerOpenApiPath,
         ...loginOpenApiPath,
-        ...changePasswordOpenApiPath
+        ...changePasswordOpenApiPath,
+
+        // destination
+        ...destinationRoute,
+        ...addDestinationOpenApiPath,
+        ...getDestinationOpenApiPath,
+        ...updateDestinationOpenApiPath,
+        ...deleteDestinationOpenApiPath,
     },
     components: {
         securitySchemes: {

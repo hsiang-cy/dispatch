@@ -15,6 +15,13 @@
       "when": 1763631819763,
       "tag": "0001_famous_snowbird",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1764160423788,
+      "tag": "0002_huge_black_tarantula",
+      "breakpoints": true
     }
   ]
 }

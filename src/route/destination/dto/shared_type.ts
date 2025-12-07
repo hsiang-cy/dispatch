@@ -1,0 +1,78 @@
+import Type from 'typebox'
+
+export const TimeWindowSchema = Type.Array(
+    Type.Object({
+        start: Type.Integer({ minimum: 0, maximum: 1440, description: '開始時間（分鐘）', examples: [480] }),
+        end: Type.Integer({ minimum: 0, maximum: 1440, description: '結束時間（分鐘）', examples: [720] })
+    }),
+    { description: '時間窗口，以分鐘記錄', examples: [[{ start: 480, end: 720 }]] }
+)
+
+export const LocationSchema = Type.Object({
+    lat: Type.Number({ description: '緯度', examples: [25.0330] }),
+    lng: Type.Number({ description: '經度', examples: [121.5654] }),
+    geohash: Type.Optional(Type.String({ description: 'Geohash', examples: ['wsqqs'] }))
+})
+
+export const DestinationNameSchema = Type.String({
+    minLength: 1,
+    maxLength: 100,
+    description: '地點名稱',
+    examples: ['台北車站']
+})
+export const AddressSchema = Type.String({
+    minLength: 1,
+    maxLength: 500,
+    description: '詳細地址',
+    examples: ['台北市中正區北平西路3號']
+})
+export const CommentSchema = Type.Optional(Type.String({
+    maxLength: 500,
+    description: '備註'
+}))
+export const OperationTimeSchema = Type.Integer({
+    minimum: 0,
+    default: 0,
+    description: '預計停留時間（分鐘）',
+    examples: [30]
+})
+export const DemandSchema = Type.Integer({
+    minimum: 0,
+    default: 0,
+    description: '需求量',
+    examples: [5]
+})
+export const PrioritySchema = Type.Integer({
+    minimum: 0,
+    default: 0,
+    description: '優先順序',
+    examples: [1]
+})
+export const IsDepotSchema = Type.Boolean({
+    default: false,
+    description: '是否為倉庫',
+    examples: [false]
+})
+
+export const ErrorSchema = Type.Object({
+    message: Type.String({ examples: ['地點不存在'] }),
+    error: Type.Optional(Type.Any())
+}, { $id: 'DestinationError', title: 'Destination Error' })
+
+export const DestinationDataSchema = Type.Object({
+    id: Type.Integer(),
+    name: Type.String(),
+    is_depot: Type.Boolean(),
+    comment: Type.Union([Type.String(), Type.Null()]),
+    time_window: TimeWindowSchema,
+    address: Type.String(),
+    location: LocationSchema,
+    operation_time: Type.Integer(),
+    demand: Type.Integer(),
+    priority: Type.Integer(),
+    created_at: Type.String({ format: 'date-time' }),
+    updated_at: Type.String({ format: 'date-time' })
+})
+
+export type TimeWindow = Type.Static<typeof TimeWindowSchema>
+export type Location = Type.Static<typeof LocationSchema>

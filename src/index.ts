@@ -1,5 +1,4 @@
 import { Hono } from 'hono'
-import { userRoute, vehicleRoute } from '#route/route.index.ts'
 import { drizzleORM } from '#db'
 import { sql } from 'drizzle-orm'
 import { jwtAuth } from '#middleware'
@@ -8,6 +7,12 @@ import { HTTPException } from 'hono/http-exception'
 
 import { openApiDoc } from './openapi.ts'
 import { Scalar } from '@scalar/hono-api-reference'
+
+import {
+    userRoute,
+    vehicleRoute,
+    destinationRoute
+} from '#route/route.index.ts'
 
 // 測試資料庫連線
 try {
@@ -36,17 +41,18 @@ const app = new Hono()
         const { message, cause, status } = err
         return c.json({
             message,
-            error:cause,
+            error: cause,
         }, status)
     })
 
     // user route    
     .route('/api/user', userRoute)
 
+    .use(jwtAuth) // 需要登入的 ↓↓↓↓↓↓↓↓↓
     // vehicle route
     .route('/api/vehicle', vehicleRoute)
-    .use(jwtAuth) // 需要登入的 ↓↓↓↓↓↓↓↓↓
-
+    // destination route
+    .route('/api/destination', destinationRoute)
 
 
     // jwt test

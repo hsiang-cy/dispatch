@@ -17,7 +17,7 @@ export const addVehicle = factory.createHandlers(async (c) => {
         const result = await drizzleORM
             .insert(schema.vehicle)
             .values({
-                user_id: jwtPayload?.id ?? 144,
+                user_id: jwtPayload?.id ?? 144, // TODO 使用 middleware 取得 user_id
                 vehicle_number: data.vehicleNumber,
                 vehicle_type: data.vehicleType,
                 capacity: data.capacity,

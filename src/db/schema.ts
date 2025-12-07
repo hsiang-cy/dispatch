@@ -45,7 +45,7 @@ export const user = pgTable('user', {
 
 // 地點
 export const destination = pgTable('destination', {
-    user_id: integer('users_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    user_id: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
     id: serial('id').primaryKey(),
     status: statusEnum('status').notNull().default('active'), // inactive, active, deleted
 
@@ -71,7 +71,7 @@ export const destination = pgTable('destination', {
 
 // 車輛
 export const vehicle = pgTable('vehicle', {
-    user_id: integer('users_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    user_id: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
     id: serial('id').primaryKey(),
     status: statusEnum('status').notNull().default('active'), // inactive, active, deleted
 
@@ -93,7 +93,7 @@ export const vehicle = pgTable('vehicle', {
 
 // 一筆訂單(一筆訂單可以多次計算)
 export const orders = pgTable('orders', {
-    user_id: integer('users_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    user_id: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
     id: serial('id').primaryKey(),
     status: statusEnum('status').notNull().default('active'), // inactive, active, deleted
 
@@ -109,7 +109,7 @@ export const orders = pgTable('orders', {
 
 // 一次計算任務
 export const compute = pgTable('compute', {
-    user_id: integer('users_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+    user_id: integer('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
     id: serial('id').primaryKey(),
     status: statusEnum('status').notNull().default('active'), // inactive, active, deleted
 

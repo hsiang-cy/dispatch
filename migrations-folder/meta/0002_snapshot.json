@@ -1,6 +1,6 @@
 {
-  "id": "4b35b179-2f91-44c4-aefc-405cf29ec4e8",
-  "prevId": "c0998fe4-3436-40d2-82c2-9549fc7ea94e",
+  "id": "14a1e3c8-2c2d-468c-b7cb-eacb4b2fe575",
+  "prevId": "4b35b179-2f91-44c4-aefc-405cf29ec4e8",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -8,8 +8,8 @@
       "name": "compute",
       "schema": "",
       "columns": {
-        "users_id": {
-          "name": "users_id",
+        "user_id": {
+          "name": "user_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -113,11 +113,11 @@
         }
       },
       "indexes": {
-        "compute_users_id_index": {
-          "name": "compute_users_id_index",
+        "compute_user_id_index": {
+          "name": "compute_user_id_index",
           "columns": [
             {
-              "expression": "users_id",
+              "expression": "user_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -160,12 +160,12 @@
         }
       },
       "foreignKeys": {
-        "compute_users_id_user_id_fk": {
-          "name": "compute_users_id_user_id_fk",
+        "compute_user_id_user_id_fk": {
+          "name": "compute_user_id_user_id_fk",
           "tableFrom": "compute",
           "tableTo": "user",
           "columnsFrom": [
-            "users_id"
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -197,8 +197,8 @@
       "name": "destination",
       "schema": "",
       "columns": {
-        "users_id": {
-          "name": "users_id",
+        "user_id": {
+          "name": "user_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -297,11 +297,11 @@
         }
       },
       "indexes": {
-        "destination_users_id_index": {
-          "name": "destination_users_id_index",
+        "destination_user_id_index": {
+          "name": "destination_user_id_index",
           "columns": [
             {
-              "expression": "users_id",
+              "expression": "user_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -344,12 +344,12 @@
         }
       },
       "foreignKeys": {
-        "destination_users_id_user_id_fk": {
-          "name": "destination_users_id_user_id_fk",
+        "destination_user_id_user_id_fk": {
+          "name": "destination_user_id_user_id_fk",
           "tableFrom": "destination",
           "tableTo": "user",
           "columnsFrom": [
-            "users_id"
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -602,8 +602,8 @@
       "name": "orders",
       "schema": "",
       "columns": {
-        "users_id": {
-          "name": "users_id",
+        "user_id": {
+          "name": "user_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -656,11 +656,11 @@
         }
       },
       "indexes": {
-        "orders_users_id_index": {
-          "name": "orders_users_id_index",
+        "orders_user_id_index": {
+          "name": "orders_user_id_index",
           "columns": [
             {
-              "expression": "users_id",
+              "expression": "user_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -688,12 +688,12 @@
         }
       },
       "foreignKeys": {
-        "orders_users_id_user_id_fk": {
-          "name": "orders_users_id_user_id_fk",
+        "orders_user_id_user_id_fk": {
+          "name": "orders_user_id_user_id_fk",
           "tableFrom": "orders",
           "tableTo": "user",
           "columnsFrom": [
-            "users_id"
+            "user_id"
           ],
           "columnsTo": [
             "id"
@@ -835,8 +835,8 @@
       "name": "vehicle",
       "schema": "",
       "columns": {
-        "users_id": {
-          "name": "users_id",
+        "user_id": {
+          "name": "user_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -924,11 +924,11 @@
         }
       },
       "indexes": {
-        "vehicle_users_id_index": {
-          "name": "vehicle_users_id_index",
+        "vehicle_user_id_index": {
+          "name": "vehicle_user_id_index",
           "columns": [
             {
-              "expression": "users_id",
+              "expression": "user_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -956,12 +956,12 @@
         }
       },
       "foreignKeys": {
-        "vehicle_users_id_user_id_fk": {
-          "name": "vehicle_users_id_user_id_fk",
+        "vehicle_user_id_user_id_fk": {
+          "name": "vehicle_user_id_user_id_fk",
           "tableFrom": "vehicle",
           "tableTo": "user",
           "columnsFrom": [
-            "users_id"
+            "user_id"
           ],
           "columnsTo": [
             "id"
