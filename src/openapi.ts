@@ -4,9 +4,9 @@ import {
     changePasswordOpenApiPath,
     destinationRoute,
     addDestinationOpenApiPath,
-    getDestinationOpenApiPath,
-    updateDestinationOpenApiPath,
-    deleteDestinationOpenApiPath
+    // getDestinationOpenApiPath,
+    // updateDestinationOpenApiPath,
+    // deleteDestinationOpenApiPath
 } from '#route/route.index.ts'
 
 export const openApiDoc = {
@@ -27,9 +27,9 @@ export const openApiDoc = {
         // destination
         ...destinationRoute,
         ...addDestinationOpenApiPath,
-        ...getDestinationOpenApiPath,
-        ...updateDestinationOpenApiPath,
-        ...deleteDestinationOpenApiPath,
+        // ...getDestinationOpenApiPath,
+        // ...updateDestinationOpenApiPath,
+        // ...deleteDestinationOpenApiPath,
     },
     components: {
         securitySchemes: {

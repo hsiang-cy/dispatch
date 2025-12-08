@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "bun --hot src/index.ts",
-    "type": "bunx tsc",
+    "type": "bunx tsc --watch",
     "generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
     "migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
     "migrate:undo": "drizzle-kit migrate:undo --config=src/db/drizzle.config.ts",
@@ -39,7 +39,6 @@
     "drizzle-typebox": "^0.3.3",
     "hono": "^4.10.6",
     "hono-openapi": "^1.1.1",
-    "jsonwebtoken": "^9.0.2",
     "pino": "^10.1.0",
     "postgres": "^3.4.7",
     "typebox": "^1.0.55"

@@ -1,6 +1,18 @@
 import Type from 'typebox'
 import { Compile } from 'typebox/compile'
-import { DestinationNameSchema, AddressSchema, LocationSchema, TimeWindowSchema, CommentSchema, OperationTimeSchema, DemandSchema, PrioritySchema, IsDepotSchema, DestinationDataSchema, ErrorSchema } from './shared_type.ts'
+import {
+    DestinationNameSchema,
+    AddressSchema,
+    LocationSchema,
+    TimeWindowSchema,
+    CommentSchema,
+    OperationTimeSchema,
+    DemandSchema,
+    PrioritySchema,
+    IsDepotSchema,
+    DestinationDataSchema,
+    ErrorSchema
+} from './shared_type.ts'
 
 export const AddDestinationRequestSchema = Type.Object({
     name: DestinationNameSchema,

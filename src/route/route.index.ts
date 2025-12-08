@@ -8,9 +8,9 @@ export {
 export {
     destinationRoute,
     addDestinationOpenApiPath,
-    getDestinationOpenApiPath,
-    updateDestinationOpenApiPath,
-    deleteDestinationOpenApiPath
+    // getDestinationOpenApiPath,
+    // updateDestinationOpenApiPath,
+    // deleteDestinationOpenApiPath
 } from "./destination/index.ts";
 
 export {

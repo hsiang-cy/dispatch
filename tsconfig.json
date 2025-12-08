@@ -45,9 +45,4 @@
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
-  // "baseUrl": ".",
-  // "paths":{
-  //   "#db/*": ["src/db/*"],
-  //   "#route/*": ["src/route/*"],
-  // }
 }

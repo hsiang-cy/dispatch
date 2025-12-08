@@ -33,7 +33,7 @@ export const CommentSchema = Type.Optional(Type.String({
 export const OperationTimeSchema = Type.Integer({
     minimum: 0,
     default: 0,
-    description: '預計停留時間（分鐘）',
+    description: '服務時間, 裝卸貨時間(min)',
     examples: [30]
 })
 export const DemandSchema = Type.Integer({
@@ -45,13 +45,13 @@ export const DemandSchema = Type.Integer({
 export const PrioritySchema = Type.Integer({
     minimum: 0,
     default: 0,
-    description: '優先順序',
+    description: '優先順序(越小 -> 優先度大)',
     examples: [1]
 })
 export const IsDepotSchema = Type.Boolean({
     default: false,
     description: '是否為倉庫',
-    examples: [false]
+    examples: [true]
 })
 
 export const ErrorSchema = Type.Object({
