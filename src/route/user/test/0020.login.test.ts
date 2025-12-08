@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach } from 'bun:test'
 import { Hono } from 'hono'
 import { drizzleORM, schema } from '#db'
 import { HTTPException } from 'hono/http-exception'
@@ -38,7 +37,7 @@ describe('POST /user/login 登入', () => {
 
     it('登入成功: 應該回傳 200 和 token', async () => {
         const userData = generateRandomUserData();
-        
+
         await app.request('/user/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -57,7 +56,7 @@ describe('POST /user/login 登入', () => {
         expect(res.status).toBe(200)
         const body = await res.json() as LoginResponse;
         expect(body.message).toBe('使用者登入成功')
-        expect(body.data?.token).toBeString()
+        expect(body.data?.token).toBeTypeOf('string')
     })
 
     it('登入失敗: 密碼錯誤, 應該回傳 401', async () => {

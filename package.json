@@ -18,7 +18,8 @@
     "generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
     "migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
     "migrate:undo": "drizzle-kit migrate:undo --config=src/db/drizzle.config.ts",
-    "migrate:status": "drizzle-kit migrate:status --config=src/db/drizzle.config.ts"
+    "migrate:status": "drizzle-kit migrate:status --config=src/db/drizzle.config.ts",
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -32,7 +33,6 @@
   "dependencies": {
     "@hono/standard-validator": "^0.2.0",
     "@hono/typebox-validator": "^1.1.0",
-    "@hono/zod-validator": "^0.7.5",
     "@scalar/hono-api-reference": "^0.9.25",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",
