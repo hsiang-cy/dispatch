@@ -5,7 +5,7 @@ import { jwtAuth } from '#middleware'
 import { HTTPException } from 'hono/http-exception'
 
 
-import { openApiDoc } from './openapi.ts'
+import { openApiDoc, stoplight } from './openapi.ts'
 import { Scalar } from '@scalar/hono-api-reference'
 
 import {
@@ -28,6 +28,7 @@ const app = new Hono()
 
     .get('/doc', (c) => c.json(openApiDoc))
     .get('/scalar', Scalar({ url: '/doc', theme: 'purple' }))
+    .get('/stoplight', (c) => { return c.html(stoplight); })
 
     .onError((err, c) => {
         console.error({
@@ -48,7 +49,6 @@ const app = new Hono()
     // user route    
     .route('/api/user', userRoute)
 
-    .use(jwtAuth) // 需要登入的 ↓↓↓↓↓↓↓↓↓
     // vehicle route
     .route('/api/vehicle', vehicleRoute)
     // destination route
@@ -60,3 +60,4 @@ const app = new Hono()
 
 export default app
 console.log('http://localhost:3000/scalar')
+console.log('http://localhost:3000/stoplight')
