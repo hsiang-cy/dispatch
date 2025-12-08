@@ -25,6 +25,7 @@ export default defineConfig({
             '#types': path.resolve(__dirname, './src/utils/types.ts'),
             '#factory': path.resolve(__dirname, './src/utils/factory.ts'),
             '#helpers': path.resolve(__dirname, './src/utils/helpers'),
+            '#root': path.resolve(__dirname, './src'),
         },
     },
 })

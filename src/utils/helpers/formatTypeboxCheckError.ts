@@ -7,7 +7,7 @@ const formatTypeboxCheckError = (errors: any[]) => {
     return errors.map(e => ({
         instancePath: e.path,
         message: e.message,
-        params: e.schema
+        params: e.params
     }));
 }
 

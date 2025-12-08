@@ -1,4 +1,9 @@
-import { beforeAll, afterAll } from 'vitest'
+import { beforeAll, afterAll, describe } from 'vitest'
+import app from '#root/index.ts'
+
+declare global {
+    var testAuthToken: string;
+}
 
 beforeAll(() => {
 

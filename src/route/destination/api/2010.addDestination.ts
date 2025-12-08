@@ -3,7 +3,7 @@ import { requestParamsCheck } from '#helpers/formatTypeboxCheckError.ts'
 import { HTTPException } from 'hono/http-exception'
 import { drizzleORM, schema } from '#db'
 import { jwtAuth } from '#middleware'
-import { AddDestinationRequestValidator, type AddDestinationRequest } from '../dto/2010.addDestination.dto.ts'
+import { AddDestinationRequestValidator, type AddDestinationResponse } from '../dto/2010.addDestination.dto.ts'
 
 export const addDestinationHandlers = factory.createHandlers(
     jwtAuth,
@@ -27,13 +27,15 @@ export const addDestinationHandlers = factory.createHandlers(
                 priority: data.priority ?? 0
             }
 
-            // 然後用這個 insert
+            // 直接寫在這，可能drizzle無法正確解讀類型,
+            // 用 typeof schema.destination.$inferInsert 在上面定義好, 再 insert
             const [result] = await drizzleORM.insert(schema.destination).values(insertData).returning()
 
-            return c.json({
+            const request: AddDestinationResponse = {
                 message: '地點新增成功',
-                data: { id: userId }
-            }, 201)
+                data: { id: result?.id as number }
+            }
+            return c.json(request, 201)
         } catch (e: any) {
             console.error('/api/destination/add 錯誤：', e)
             throw new HTTPException(500, { message: '資料庫錯誤', cause: e.message })

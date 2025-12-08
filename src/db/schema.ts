@@ -54,7 +54,7 @@ export const destination = pgTable('destination', {
     comment: text('comment'), // 備註
     time_window: jsonb('time_window').$type<TimeWindow>().notNull(), // json 形式, 以分鐘紀錄, [{start: 480, end: 720}, {start: 780, end: 1020}] 表示 08:00-12:00, 13:00-17:00
     address: text('address').notNull(),         // 詳細地址
-    location: jsonb('location').notNull(),      // 經緯度 json 形式, {lat: 25.0330, lng: 121.5654, geohash: 'wsqqs'} 
+    location: jsonb('location').notNull(),      // 經緯度 json 形式, {lat: 25.1111, lng: 121.5566, geohash: 'wsqqs'} 
     operation_time: integer('operation_time').notNull().default(0),     // 預計停留時間(作業時間、卸貨時間等), 以分鐘為單位
     demand: integer('demand').notNull().default(0), // 需求量
     priority: integer('priority').notNull().default(0), // 優先順序, 數字越大優先順序越高

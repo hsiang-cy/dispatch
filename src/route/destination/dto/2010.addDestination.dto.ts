@@ -28,11 +28,14 @@ export const AddDestinationRequestSchema = Type.Object({
 
 export const AddDestinationResponseSchema = Type.Object({
     message: Type.String({ examples: ['地點新增成功'] }),
-    data: DestinationDataSchema
+    data: Type.Object({
+        id: Type.Number({ examples: [666] })
+    })
 }, { $id: 'AddDestinationResponse', title: 'Add Destination Response' })
 
 export type AddDestinationRequest = Type.Static<typeof AddDestinationRequestSchema>
 export const AddDestinationRequestValidator = Compile(AddDestinationRequestSchema)
+export type AddDestinationResponse = Type.Static<typeof AddDestinationResponseSchema>
 
 export const addDestinationOpenApiPath = {
     '/api/destination/add': {

@@ -26,10 +26,6 @@ try {
 const app = new Hono()
     .get('/test', (c) => c.text('test succesful'))
 
-    .get('/doc', (c) => c.json(openApiDoc))
-    .get('/scalar', Scalar({ url: '/doc', theme: 'purple' }))
-    .get('/stoplight', (c) => { return c.html(stoplight); })
-
     .onError((err, c) => {
         console.error({
             errorRoute: c.req.path,
@@ -53,10 +49,14 @@ const app = new Hono()
     .route('/api/vehicle', vehicleRoute)
     // destination route
     .route('/api/destination', destinationRoute)
-
-
+    
+    
     // jwt test
     .get('loginCheckCheck', (c) => c.json(c.get('jwtPayload')))
+    
+    .get('/doc', (c) => c.json(openApiDoc))
+    .get('/scalar', Scalar({ url: '/doc', theme: 'purple' }))
+    .get('/stoplight', (c) => { return c.html(stoplight); })
 
 export default app
 console.log('http://localhost:3000/scalar')
