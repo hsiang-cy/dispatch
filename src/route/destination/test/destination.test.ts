@@ -58,4 +58,35 @@ describe('addDestination', () => {
         expect(json.message).toBe('地點新增成功')
         expect(res.status).toBe(201)
     })
+
+    it('新增地點 > 錯誤的 body schema', async () => {
+        const res = await app.request('/api/destination/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`,
+            },
+            body: JSON.stringify({
+                address: "測試地址",
+                location: {
+                    lat: 25.3333,
+                    lng: 121.5566,
+                },
+                timeWindow: [
+                    {
+                        start: 480,
+                        end: 720
+                    }
+                ],
+                isDepot: false,
+                comment: "這是備註...",
+                operationTime: 0,
+                demand: 0,
+                priority: 0
+            })
+        })
+        const json = await res.json() as any
+        expect(json.message).toBe('請求格式錯誤')
+        expect(res.status).toBe(400)
+    })
 })
