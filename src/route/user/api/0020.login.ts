@@ -11,6 +11,8 @@ import {
     type LoginRequest
 } from '../dto/0020.login.dto.ts'
 
+// xh localhost:3000/api/user/login account=john_doe password=password123
+
 export const loginHandlers = factory.createHandlers(
     tbValidator("json", LoginRequestSchema),
     async (c) => {

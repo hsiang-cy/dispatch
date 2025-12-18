@@ -1,5 +1,13 @@
 import Type from 'typebox'
 
+export const idSchema = Type.Integer({
+    minimum: 0,
+    description: '地點 ID',
+    examples: [666]
+})
+
+
+
 export const TimeWindowSchema = Type.Array(
     Type.Object({
         start: Type.Integer({ minimum: 0, maximum: 1440, description: '開始時間（分鐘）', examples: [480] }),
@@ -14,7 +22,7 @@ export const LocationSchema = Type.Object({
     geohash: Type.Optional(Type.String({ description: 'Geohash', examples: ['wsqqs'] }))
 })
 
-export const DestinationNameSchema = Type.String({
+export const nameSchema = Type.String({
     minLength: 1,
     maxLength: 100,
     description: '地點名稱',
@@ -58,21 +66,6 @@ export const ErrorSchema = Type.Object({
     message: Type.String({ examples: ['地點不存在'] }),
     error: Type.Optional(Type.Any())
 }, { $id: 'DestinationError', title: 'Destination Error' })
-
-export const DestinationDataSchema = Type.Object({
-    id: Type.Integer(),
-    name: Type.String(),
-    is_depot: Type.Boolean(),
-    comment: Type.Union([Type.String(), Type.Null()]),
-    time_window: TimeWindowSchema,
-    address: Type.String(),
-    location: LocationSchema,
-    operation_time: Type.Integer(),
-    demand: Type.Integer(),
-    priority: Type.Integer(),
-    created_at: Type.String({ format: 'date-time' }),
-    updated_at: Type.String({ format: 'date-time' })
-})
 
 export type TimeWindow = Type.Static<typeof TimeWindowSchema>
 export type Location = Type.Static<typeof LocationSchema>
