@@ -47,6 +47,7 @@ const app = new Hono()
 
     // vehicle route
     .route('/api/vehicle', vehicleRoute)
+    
     // destination route
     .route('/api/destination', destinationRoute)
     

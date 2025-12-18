@@ -18,10 +18,10 @@ export const getDestinationHandlers = factory.createHandlers(
             ...(req.name && { name: req.name }),
             ...(req.address && { address: req.address }),
         }
-        console.log(JSON.stringify(query))
+        // console.log(JSON.stringify(query))
 
         const data = requestParamsCheck(query, GetDestinationsRequestValidator)
-        console.log(Object.keys(data).length);
+        // console.log(Object.keys(data).length);
         if (Object.keys(data).length === 0) return c.json({ message: '無須更新' })
 
         let result
@@ -51,10 +51,11 @@ export const getDestinationHandlers = factory.createHandlers(
             return c.json(result);
         }
 
-        return c.json({ data: result })
+        // return c.json({ data: result })
 
     })
 
 /*
-xh localhost:3000/api/destination/getDestinations?name=haha&id=3&isDepot=true&address=台中市&limit=5 Authorization:"Bearer token" Content-Type:"applictation/json"
+xh localhost:3000/api/user/login account=john_doe password=password123
+xh localhost:3000/api/destination/getDestinations name=haha id=3 isDepot=true address=台中市 limit=5 Authorization:"Bearer token" Content-Type:"applictation/json"
 */
