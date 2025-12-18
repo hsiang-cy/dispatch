@@ -34,9 +34,6 @@ export const AddVehicleRequestSchema = Type.Object({
         description: '備註',
         examples: ['備註訊息...'],
     })
-}, {
-    $id: 'AddVehicleRequest',
-    title: 'Add Vehicle Request'
 })
 
 export const AddVehicleResponseSchema = Type.Object({
@@ -45,9 +42,6 @@ export const AddVehicleResponseSchema = Type.Object({
     data: Type.Object({
         id: Type.Integer({ description: '車輛 ID' })
     })
-}, {
-    $id: 'AddVehicleResponse',
-    title: 'Add Vehicle Response'
 })
 
 export type AddVehicleRequest = Type.Static<typeof AddVehicleRequestSchema>

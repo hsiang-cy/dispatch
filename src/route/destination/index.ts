@@ -9,7 +9,14 @@ export const destinationRoute = new Hono()
     .get('/getDestinations',...getDestinationHandlers)
 
 
-export { addDestinationOpenApiPath } from './dto/2010.addDestination.dto.ts'
-// export { getDestinationOpenApiPath } from './dto/2020.getDestination.dto.ts'
+ 
+import { addDestinationOpenApiPath } from './dto/2010.addDestination.dto.ts'
+import { getDestinationsOpenApiPath } from './dto/2020.getDestinations.dto.ts'
+
+export const destinationOpenApiPath = {
+    ...addDestinationOpenApiPath,
+    ...getDestinationsOpenApiPath
+}
 // export { updateDestinationOpenApiPath } from './dto/2030.updateDestination.dto.ts'
 // export { deleteDestinationOpenApiPath } from './dto/2040.deleteDestination.dto.ts'
+

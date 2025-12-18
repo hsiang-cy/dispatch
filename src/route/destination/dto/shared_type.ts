@@ -13,7 +13,10 @@ export const TimeWindowSchema = Type.Array(
         start: Type.Integer({ minimum: 0, maximum: 1440, description: '開始時間（分鐘）', examples: [480] }),
         end: Type.Integer({ minimum: 0, maximum: 1440, description: '結束時間（分鐘）', examples: [720] })
     }),
-    { description: '時間窗口，以分鐘記錄', examples: [[{ start: 480, end: 720 }]] }
+    {
+        description: '時間窗口，以分鐘記錄',
+        examples: [[{ start: 480, end: 720 }]]
+    }
 )
 
 export const LocationSchema = Type.Object({
@@ -62,10 +65,6 @@ export const IsDepotSchema = Type.Boolean({
     examples: [true]
 })
 
-export const ErrorSchema = Type.Object({
-    message: Type.String({ examples: ['地點不存在'] }),
-    error: Type.Optional(Type.Any())
-}, { $id: 'DestinationError', title: 'Destination Error' })
 
 export type TimeWindow = Type.Static<typeof TimeWindowSchema>
 export type Location = Type.Static<typeof LocationSchema>

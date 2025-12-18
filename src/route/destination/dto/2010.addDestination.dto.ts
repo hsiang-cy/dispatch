@@ -10,7 +10,6 @@ import {
     DemandSchema,
     PrioritySchema,
     IsDepotSchema,
-    ErrorSchema
 } from './shared_type.ts'
 
 export const AddDestinationRequestSchema = Type.Object({
@@ -23,14 +22,14 @@ export const AddDestinationRequestSchema = Type.Object({
     operationTime: Type.Optional(OperationTimeSchema),
     demand: Type.Optional(DemandSchema),
     priority: Type.Optional(PrioritySchema)
-}, { $id: 'AddDestinationRequest', title: 'Add Destination Request' })
+})
 
 export const AddDestinationResponseSchema = Type.Object({
     message: Type.String({ examples: ['地點新增成功'] }),
     data: Type.Object({
         id: Type.Number({ examples: [666] })
     })
-}, { $id: 'AddDestinationResponse', title: 'Add Destination Response' })
+})
 
 export type AddDestinationRequest = Type.Static<typeof AddDestinationRequestSchema>
 export const AddDestinationRequestValidator = Compile(AddDestinationRequestSchema)
@@ -44,9 +43,18 @@ export const addDestinationOpenApiPath = {
             security: [{ bearerAuth: [] }],
             requestBody: { required: true, content: { 'application/json': { schema: AddDestinationRequestSchema } } },
             responses: {
-                '201': { description: '新增成功', content: { 'application/json': { schema: AddDestinationResponseSchema } } },
-                '400': { description: '請求格式錯誤', content: { 'application/json': { schema: ErrorSchema } } },
-                '401': { description: 'JWT 認證失敗', content: { 'application/json': { schema: ErrorSchema } } }
+                '201': {
+                    description: '新增成功',
+                    content: { 'application/json': { schema: AddDestinationResponseSchema } }
+                },
+                '400': {
+                    description: '請求格式錯誤',
+                    content: { 'application/json': {} }
+                },
+                '401': {
+                    description: 'JWT 認證失敗',
+                    content: { 'application/json': {} }
+                }
             }
         }
     }

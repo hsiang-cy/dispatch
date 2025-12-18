@@ -35,7 +35,6 @@ export const getDestinationHandlers = factory.createHandlers(
                 )
             ).limit(data?.limit || 10);
 
-            return c.json(result);
 
 
         } else if (data.policy && data.policy === 'or') {
@@ -48,10 +47,25 @@ export const getDestinationHandlers = factory.createHandlers(
                 )
             ).limit(data?.limit || 10);
 
-            return c.json(result);
         }
 
-        // return c.json({ data: result })
+        const resultData = result?.map((d) => {
+            return {
+                id: d.id,
+                name: d.name,
+                is_depot: d.is_depot,
+                comment: d.comment,
+                time_window: d.time_window,
+                address: d.address,
+                location: d.location,
+                operation_time: d.operation_time,
+                demand: d.demand,
+                priority: d.priority,
+                info: d.info,
+            }
+        })
+        
+        return c.json(result);
 
     })
 

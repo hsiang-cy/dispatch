@@ -5,9 +5,6 @@ import { AccountSchema, PasswordSchema, ErrorSchema } from "./shared_type.ts";
 export const LoginRequestSchema = Type.Object({
     account: AccountSchema,
     password: PasswordSchema,
-}, {
-    $id: 'LoginRequest',
-    title: 'Login Request'
 })
 
 export const LoginResponseSchema = Type.Object({
@@ -15,9 +12,6 @@ export const LoginResponseSchema = Type.Object({
     data: Type.Object({
         token: Type.String({ description: 'JWT token' })
     })
-}, {
-    $id: 'LoginResponse',
-    title: 'Login Response'
 })
 
 export const loginOpenApiPath = {

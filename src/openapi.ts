@@ -3,8 +3,7 @@ import {
     loginOpenApiPath,
     changePasswordOpenApiPath,
     destinationRoute,
-    addDestinationOpenApiPath,
-    // getDestinationOpenApiPath,
+    destinationOpenApiPath
     // updateDestinationOpenApiPath,
     // deleteDestinationOpenApiPath
 } from '#route/route.index.ts'
@@ -25,9 +24,7 @@ export const openApiDoc = {
         ...changePasswordOpenApiPath,
 
         // destination
-        ...destinationRoute,
-        ...addDestinationOpenApiPath,
-        // ...getDestinationOpenApiPath,
+        ...destinationOpenApiPath
         // ...updateDestinationOpenApiPath,
         // ...deleteDestinationOpenApiPath,
     },
