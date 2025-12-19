@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import type { BlankEnv } from 'hono/types'
 import { drizzleORM } from '#db'
 import { sql } from 'drizzle-orm'
 import { jwtAuth } from '#middleware'
@@ -23,7 +24,7 @@ try {
     process.exit(1)
 }
 
-const app = new Hono()
+const app: BlankEnv = new Hono()
     .get('/test', (c) => c.text('test succesful'))
 
     .onError((err, c) => {
@@ -47,14 +48,14 @@ const app = new Hono()
 
     // vehicle route
     .route('/api/vehicle', vehicleRoute)
-    
+
     // destination route
     .route('/api/destination', destinationRoute)
-    
-    
+
+
     // jwt test
     .get('loginCheckCheck', (c) => c.json(c.get('jwtPayload')))
-    
+
     .get('/doc', (c) => c.json(openApiDoc))
     .get('/scalar', Scalar({ url: '/doc', theme: 'purple' }))
     .get('/stoplight', (c) => { return c.html(stoplight); })

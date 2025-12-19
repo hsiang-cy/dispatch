@@ -9,7 +9,7 @@ import {
   // deleteDestinationOpenApiPath
 } from '#route/route.index.ts'
 
-export const openApiDoc: any = createDocument({
+export const openApiDoc: ReturnType<typeof createDocument> = createDocument({
   openapi: '3.1.0',
   info: { title: 'Dispatch API 文檔', version: '1.0.0' },
   servers: [
