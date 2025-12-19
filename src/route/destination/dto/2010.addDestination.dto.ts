@@ -1,39 +1,32 @@
-import Type from 'typebox'
-import { Compile } from 'typebox/compile'
-import {
-    nameSchema,
-    AddressSchema,
-    LocationSchema,
-    TimeWindowSchema,
-    CommentSchema,
-    OperationTimeSchema,
-    DemandSchema,
-    PrioritySchema,
-    IsDepotSchema,
-} from './shared_type.ts'
+import { z } from 'zod'
+import * as shared from './shared_type.ts'
 
-export const AddDestinationRequestSchema = Type.Object({
-    name: nameSchema,
-    address: AddressSchema,
-    location: LocationSchema,
-    timeWindow: TimeWindowSchema,
-    isDepot: Type.Optional(IsDepotSchema),
-    comment: CommentSchema,
-    operationTime: Type.Optional(OperationTimeSchema),
-    demand: Type.Optional(DemandSchema),
-    priority: Type.Optional(PrioritySchema)
+import { _400 } from '#helpers/formatTypeboxCheckError.ts'
+
+export const AddDestinationRequestSchema = z.object({
+    name: shared.nameSchema,
+    address: shared.AddressSchema,
+    location: shared.LocationSchema,
+    timeWindow: shared.TimeWindowSchema,
+    isDepot: shared.IsDepotSchema.optional(),
+    comment: shared.CommentSchema,
+    operationTime: shared.OperationTimeSchema.optional(),
+    demand: shared.DemandSchema.optional(),
+    priority: shared.PrioritySchema.optional()
 })
 
-export const AddDestinationResponseSchema = Type.Object({
-    message: Type.String({ examples: ['地點新增成功'] }),
-    data: Type.Object({
-        id: Type.Number({ examples: [666] })
+export const AddDestinationResponseSchema = z.object({
+    message: z.string().meta({
+        description: '地點名稱',
+        examples: ['地點新增成功'] 
+    }),
+    data: z.object({
+        id: z.number().meta({ examples: [666] })
     })
 })
 
-export type AddDestinationRequest = Type.Static<typeof AddDestinationRequestSchema>
-export const AddDestinationRequestValidator = Compile(AddDestinationRequestSchema)
-export type AddDestinationResponse = Type.Static<typeof AddDestinationResponseSchema>
+export type AddDestinationRequest = z.infer<typeof AddDestinationRequestSchema>
+export type AddDestinationResponse = z.infer<typeof AddDestinationResponseSchema>
 
 export const addDestinationOpenApiPath = {
     '/api/destination/add': {
@@ -47,10 +40,7 @@ export const addDestinationOpenApiPath = {
                     description: '新增成功',
                     content: { 'application/json': { schema: AddDestinationResponseSchema } }
                 },
-                '400': {
-                    description: '請求格式錯誤',
-                    content: { 'application/json': {} }
-                },
+                ..._400,
                 '401': {
                     description: 'JWT 認證失敗',
                     content: { 'application/json': {} }
