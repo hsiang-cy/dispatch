@@ -1,70 +1,93 @@
-import Type from 'typebox'
+import { z } from 'zod'
 
-export const idSchema = Type.Integer({
-    minimum: 0,
+
+export const idSchema = z.number().int().min(0).meta({
     description: '地點 ID',
     examples: [666]
 })
 
-
-
-export const TimeWindowSchema = Type.Array(
-    Type.Object({
-        start: Type.Integer({ minimum: 0, maximum: 1440, description: '開始時間（分鐘）', examples: [480] }),
-        end: Type.Integer({ minimum: 0, maximum: 1440, description: '結束時間（分鐘）', examples: [720] })
-    }),
-    {
-        description: '時間窗口，以分鐘記錄',
-        examples: [[{ start: 480, end: 720 }]]
-    }
-)
-
-export const LocationSchema = Type.Object({
-    lat: Type.Number({ description: '緯度', examples: [25.0330] }),
-    lng: Type.Number({ description: '經度', examples: [121.5654] }),
-    geohash: Type.Optional(Type.String({ description: 'Geohash', examples: ['wsqqs'] }))
-})
-
-export const nameSchema = Type.String({
-    minLength: 1,
-    maxLength: 100,
+export const nameSchema = z.string().min(1).max(100).meta({
     description: '地點名稱',
     examples: ['台北車站']
 })
-export const AddressSchema = Type.String({
-    minLength: 1,
-    maxLength: 500,
+
+export const AddressSchema = z.string().min(1).max(500).meta({
     description: '詳細地址',
     examples: ['台北市中正區北平西路3號']
 })
-export const CommentSchema = Type.Optional(Type.String({
-    maxLength: 500,
+
+export const CommentSchema = z.string().max(500).meta({
     description: '備註'
-}))
-export const OperationTimeSchema = Type.Integer({
-    minimum: 0,
-    default: 0,
+}).optional()
+
+export const OperationTimeSchema = z.number().int().min(0).default(0).meta({
     description: '服務時間, 裝卸貨時間(min)',
     examples: [30]
 })
-export const DemandSchema = Type.Integer({
-    minimum: 0,
-    default: 0,
+
+export const DemandSchema = z.number().int().min(0).default(0).meta({
     description: '需求量',
     examples: [5]
 })
-export const PrioritySchema = Type.Integer({
-    minimum: 0,
-    default: 0,
+
+export const PrioritySchema = z.number().int().min(0).default(0).meta({
     description: '優先順序(越小 -> 優先度大)',
     examples: [1]
 })
-export const IsDepotSchema = Type.Boolean({
-    default: false,
+
+export const IsDepotSchema = z.boolean().default(false).meta({
     description: '是否為倉庫',
     examples: [true]
 })
 
 
-export type TimeWindow = Type.Static<typeof TimeWindowSchema>
-export type Location = Type.Static<typeof LocationSchema>
+
+
+export const TimeWindowSchema = z.array(
+    z.object({
+        start: z.number().int().min(0).max(1440).meta({
+            description: '開始時間（分鐘）',
+            examples: [480]
+        }),
+        end: z.number().int().min(0).max(1440).meta({
+            description: '結束時間（分鐘）',
+            examples: [720]
+        })
+    })
+).meta({
+    description: '時間窗口，以分鐘記錄',
+    examples: [[{ start: 480, end: 720 }]]
+})
+
+export const LocationSchema = z.object({
+    lat: z.number().meta({
+        description: '緯度',
+        examples: [25.0330]
+    }),
+    lng: z.number().meta({
+        description: '經度',
+        examples: [121.5654]
+    }),
+    geohash: z.string().meta({
+        description: 'Geohash',
+        examples: ['wsqqs']
+    }).optional()
+})
+
+
+
+// 查詢用到的 
+
+export const LimitSchema = z.number().int().min(1).max(200).default(10).meta({
+    description: '獲取資料的筆數上限',
+    examples: [20]
+})
+
+export const PolicySchema = z.enum(['or', 'and']).meta({
+    description: '查詢策略',
+    examples: ['and']
+})
+
+
+export type TimeWindow = z.infer<typeof TimeWindowSchema>
+export type Location = z.infer<typeof LocationSchema>

@@ -1,25 +1,35 @@
 import { HTTPException } from 'hono/http-exception'
-import { type Validator, Compile } from 'typebox/compile';
-import type { TSchema, Static } from 'typebox';
+import { z } from 'zod'
 
 
-const formatTypeboxCheckError = (errors: any[]) => {
-    return errors.map(e => ({
-        instancePath: e.path,
-        message: e.message,
-        params: e.params
-    }));
+const formatZodError = (errorIssues: any[]) => {
+    return errorIssues.map((e) => {
+        return{
+            path:e.path[0],
+            errorMessage:e.message
+        }
+    })
 }
 
-export const requestParamsCheck = <T extends TSchema>(req: unknown, validator: Validator<{}, T>): Static<T> => {
-    if (!validator.Check(req)) {
-        const errors = [...validator.Errors(req)];
+export const requestParamsCheck = <T extends z.ZodType>(
+    req: unknown,
+    schema: T
+): z.infer<T> => {
+    const result = schema.safeParse(req)
+
+    if (!result.success) {
         throw new HTTPException(400, {
             message: '請求格式錯誤',
             cause: {
-                errors: formatTypeboxCheckError(errors)
+                errors: formatZodError(result.error.issues)
+                // errors: result.error.issues
             }
         })
     }
-    return req as Static<T>
-} 
+
+    return result.data
+}
+
+export const _400ErrorSchema = z.object({
+    message:z.string(),
+})

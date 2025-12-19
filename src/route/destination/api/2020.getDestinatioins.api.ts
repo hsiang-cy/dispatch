@@ -3,7 +3,7 @@ import { requestParamsCheck } from '#helpers/formatTypeboxCheckError.ts'
 import { HTTPException } from 'hono/http-exception'
 import { drizzleORM, schema } from '#db'
 import { jwtAuth } from '#middleware'
-import { type GetDestinationsRequest, GetDestinationsRequestValidator } from '../dto/2020.getDestinations.dto.ts'
+import { type GetDestinationsRequest, GetDestinationsRequestSchema } from '../dto/2020.getDestinations.dto.ts'
 import { or, and, eq, ilike } from 'drizzle-orm'
 
 export const getDestinationHandlers = factory.createHandlers(
@@ -20,7 +20,7 @@ export const getDestinationHandlers = factory.createHandlers(
         }
         // console.log(JSON.stringify(query))
 
-        const data = requestParamsCheck(query, GetDestinationsRequestValidator)
+        const data = requestParamsCheck(query, GetDestinationsRequestSchema)
         // console.log(Object.keys(data).length);
         if (Object.keys(data).length === 0) return c.json({ message: '無須更新' })
 
