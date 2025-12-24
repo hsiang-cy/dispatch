@@ -1,5 +1,5 @@
 import { factory } from '#factory'
-import { requestParamsCheck } from '#helpers/formatTypeboxCheckError.ts'
+import { requestCheck } from '#helpers/formatTypeboxCheckError.ts'
 import { HTTPException } from 'hono/http-exception'
 import { drizzleORM, schema } from '#db'
 import { jwtAuth } from '#middleware'
@@ -20,9 +20,9 @@ export const getDestinationHandlers = factory.createHandlers(
         }
         // console.log(JSON.stringify(query))
 
-        const data = requestParamsCheck(query, GetDestinationsRequestSchema)
+        const data = requestCheck(query, GetDestinationsRequestSchema)
         // console.log(Object.keys(data).length);
-        if (Object.keys(data).length === 0) return c.json({ message: '無須更新' })
+        if (Object.keys(data).length === 0) return c.json({ message: '沒有需要查找的欄位' })
 
         let result
         if (data.policy && data.policy === 'and') {
@@ -65,11 +65,12 @@ export const getDestinationHandlers = factory.createHandlers(
             }
         })
         
-        return c.json(result);
+        return c.json(resultData);
 
     })
 
 /*
-xh localhost:3000/api/user/login account=john_doe password=password123
-xh localhost:3000/api/destination/getDestinations name=haha id=3 isDepot=true address=台中市 limit=5 Authorization:"Bearer token" Content-Type:"applictation/json"
+curl -X GET "http://localhost:3000/api/destination/getDestinations?name=haha&id=3&isDepot=true&address=台中市&limit=5&policy=or" \
+-H "Authorization: Bearer token" \
+-H "Content-Type: application/json" | jq .
 */
