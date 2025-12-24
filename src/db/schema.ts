@@ -35,8 +35,8 @@ export const user = pgTable('user', {
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
     phone: text('phone'),
-    created_at: timestamp('created_at').defaultNow().notNull(),
-    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
     info: jsonb('info'),
 }, (table) => ([
     index().on(table.account),
@@ -60,8 +60,8 @@ export const destination = pgTable('destination', {
     priority: integer('priority').notNull().default(0), // 優先順序, 數字越大優先順序越高
 
 
-    created_at: timestamp('created_at').defaultNow().notNull(),
-    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
     info: jsonb('info'),
 }, (table) => ([
     index().on(table.user_id),
@@ -83,8 +83,8 @@ export const vehicle = pgTable('vehicle', {
     max_working_time: integer('max_working_time').notNull().default(0), // 最長工時(分)，0表無限
     depot_id: integer('depot_id').notNull().references(() => destination.id), // 預設出發位置(通常是倉庫)
 
-    created_at: timestamp('created_at').defaultNow().notNull(),
-    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
     info: jsonb('info'),
 }, (table) => ([
     index().on(table.user_id),
@@ -99,8 +99,8 @@ export const orders = pgTable('orders', {
 
     order_number: text('order_number').notNull(),
     scheduled_time: timestamp('scheduled_time').notNull(),
-    created_at: timestamp('created_at').defaultNow().notNull(),
-    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
     info: jsonb('info'),
 }, (table) => ([
     index().on(table.user_id),
@@ -126,8 +126,8 @@ export const compute = pgTable('compute', {
     result: jsonb('result').$type<ComputeResult>(), // 計算結果
     fail_reason: jsonb('fail_reason'), // 失敗原因描述
 
-    created_at: timestamp('created_at').defaultNow().notNull(),
-    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
     info: jsonb('info'),
 }, (table) => ([
     index().on(table.user_id),
@@ -143,8 +143,8 @@ export const order_destinations = pgTable('order_destinations', {
     // sequence: integer('sequence'), // 順序?
     demand: integer('demand').notNull().default(1), // 每個地點的需求量
 
-    created_at: timestamp('created_at').defaultNow().notNull(),
-    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
     info: jsonb('info'),
 }, (table) => ([
     index().on(table.order_id),
@@ -159,8 +159,8 @@ export const order_vehicles = pgTable('order_vehicles', {
     order_id: integer('order_id').notNull().references(() => orders.id, { onDelete: 'cascade' }),
     vehicle_id: integer('vehicle_id').notNull().references(() => vehicle.id),
 
-    created_at: timestamp('created_at').defaultNow().notNull(),
-    updated_at: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }),
     info: jsonb('info'),
 }, (table) => ([
     index().on(table.order_id),
