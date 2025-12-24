@@ -20,22 +20,22 @@ export const CommentSchema = z.string().max(500).meta({
     description: '備註'
 }).optional()
 
-export const OperationTimeSchema = z.number().int().min(0).default(0).meta({
+export const OperationTimeSchema = z.number().int().min(0).meta({
     description: '服務時間, 裝卸貨時間(min)',
     examples: [30]
 })
 
-export const DemandSchema = z.number().int().min(0).default(0).meta({
+export const DemandSchema = z.number().int().min(0).meta({
     description: '需求量',
     examples: [5]
 })
 
-export const PrioritySchema = z.number().int().min(0).default(0).meta({
+export const PrioritySchema = z.number().int().min(0).meta({
     description: '優先順序(越小 -> 優先度大)',
     examples: [1]
 })
 
-export const IsDepotSchema = z.boolean().default(false).meta({
+export const IsDepotSchema = z.boolean().meta({
     description: '是否為倉庫',
     examples: [true]
 })

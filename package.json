@@ -34,6 +34,7 @@
   "dependencies": {
     "@hono/standard-validator": "^0.2.0",
     "@hono/typebox-validator": "^1.1.0",
+    "@hono/zod-validator": "^0.7.6",
     "@scalar/hono-api-reference": "^0.9.25",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.7",

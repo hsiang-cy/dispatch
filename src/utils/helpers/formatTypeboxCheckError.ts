@@ -11,7 +11,7 @@ const formatZodError = (errorIssues: any[]) => {
     })
 }
 
-export const requestParamsCheck = <T extends z.ZodType>(
+export const requestCheck = <T extends z.ZodType>(
     req: unknown,
     schema: T
 ): z.infer<T> => {

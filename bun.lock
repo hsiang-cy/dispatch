@@ -7,6 +7,7 @@
       "dependencies": {
         "@hono/standard-validator": "^0.2.0",
         "@hono/typebox-validator": "^1.1.0",
+        "@hono/zod-validator": "^0.7.6",
         "@scalar/hono-api-reference": "^0.9.25",
         "dotenv": "^17.2.3",
         "drizzle-orm": "^0.44.7",
@@ -92,6 +93,8 @@
     "@hono/standard-validator": ["@hono/standard-validator@0.2.0", "", { "peerDependencies": { "@standard-schema/spec": "1.0.0", "hono": ">=3.9.0" } }, "sha512-pFq0UVAnjzXcDAgqFpDeVL3MOUPrlIh/kPqBDvbCYoThVhhS+Vf37VcdsakdOFFGiqoiYVxp3LifXFhGhp/rgQ=="],
 
     "@hono/typebox-validator": ["@hono/typebox-validator@1.1.0", "", { "peerDependencies": { "hono": ">=3.9.0", "typebox": "^1.0.30" } }, "sha512-pmrNFo0yrNhsX24vyakyoW7SfEWKjHA0SH1y6UYPYjGXRZe0zSP3ipOiJVcWGD+US+ZA9m9+D4Z6GtW9Ev9cPA=="],
+
+    "@hono/zod-validator": ["@hono/zod-validator@0.7.6", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.25.0 || ^4.0.0" } }, "sha512-Io1B6d011Gj1KknV4rXYz4le5+5EubcWEU/speUjuw9XMMIaP3n78yXLhjd2A3PXaXaUwEAluOiAyLqhBEJgsw=="],
 
     "@jridgewell/sourcemap-codec": ["@jridgewell/sourcemap-codec@1.5.5", "", {}, "sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og=="],
 

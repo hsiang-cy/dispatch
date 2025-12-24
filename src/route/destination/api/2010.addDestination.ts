@@ -1,5 +1,5 @@
 import { factory } from '#factory'
-import { requestParamsCheck } from '#helpers/formatTypeboxCheckError.ts'
+import { requestCheck } from '#helpers/formatTypeboxCheckError.ts'
 import { HTTPException } from 'hono/http-exception'
 import { drizzleORM, schema } from '#db'
 import { jwtAuth } from '#middleware'
@@ -9,7 +9,7 @@ export const addDestinationHandlers = factory.createHandlers(
     jwtAuth,
     async (c) => {
         const req = await c.req.json() as unknown
-        const data = requestParamsCheck(req, AddDestinationRequestSchema)
+        const data = requestCheck(req, AddDestinationRequestSchema)
 
         try {
             const { id: userId } = c.get('jwtPayload')
