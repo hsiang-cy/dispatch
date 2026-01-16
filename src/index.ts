@@ -2,8 +2,7 @@ import { Hono } from 'hono'
 import type { BlankEnv } from 'hono/types'
 import { drizzleORM } from '#db'
 import { sql } from 'drizzle-orm'
-import { jwtAuth } from '#middleware'
-import { HTTPException } from 'hono/http-exception'
+import { errorControl } from '#middleware'
 
 
 import { openApiDoc, stoplight } from './openapi.ts'
@@ -27,21 +26,7 @@ try {
 const app: BlankEnv = new Hono()
     .get('/test', (c) => c.text('test succesful'))
 
-    .onError((err, c) => {
-        console.error({
-            errorRoute: c.req.path,
-            method: c.req.method,
-            errorMessage: err.message,
-        })
-        if (!(err instanceof HTTPException)) {
-            return c.json({ message: 'unknown error' }, 500)
-        }
-        const { message, cause, status } = err
-        return c.json({
-            message,
-            error: cause,
-        }, status)
-    })
+    .onError((err, c) => errorControl(err, c))
 
     // user route    
     .route('/api/user', userRoute)

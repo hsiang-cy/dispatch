@@ -4,11 +4,13 @@ import { _400 } from '#helpers/formatTypeboxCheckError.ts'
 import { Parameters } from 'typebox'
 
 export const UpdateDestinationPathSchema = z.object({
-    destinationId: z.string()
+    destinationId: z.string().regex(/^[1-9]\d*$/, '必須是數字').meta({
+        description: '地點ID, 整數',
+        examples: ['777']
+    })
 })
 
 export const UpdateDestinationRequestSchema = z.object({
-    // id: shared.idSchema,
     name: shared.nameSchema.optional(),
     address: shared.AddressSchema.optional(),
     location: shared.LocationSchema.optional(),
@@ -21,17 +23,9 @@ export const UpdateDestinationRequestSchema = z.object({
 })
 
 export const UpdateDestinationResponseSchema = z.object({
-    message: z.string().meta({
-        description: '操作結果',
-        examples: ['地點更新成功','haha']
-    }),
-    data: z.object({
-        id: z.number().meta({ examples: [666] }),
-        updated_fields: z.array(z.string()).meta({
-            description: '已更新的欄位列表',
-            examples: [['name', 'address']]
-        })
-    })
+    success: z.boolean(),
+    message: z.string().optional(),
+    updatedId: z.array(z.number()).optional()
 })
 
 export type UpdateDestinationParam = z.infer<typeof UpdateDestinationPathSchema>
