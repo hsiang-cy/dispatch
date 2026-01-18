@@ -1,38 +1,73 @@
 import { factory } from '#factory'
+import { requestCheck } from '#helpers/formatTypeboxCheckError.ts'
 import { HTTPException } from 'hono/http-exception'
+import { drizzleORM, schema } from '#db'
 import { jwtAuth } from '#middleware'
+import { eq, and, count } from 'drizzle-orm'
 import { zValidator } from '@hono/zod-validator'
-import { validator } from '#root/utils/middleware/validator.ts'
+import { keyof, length, success, z } from 'zod'
 import {
     UpdateDestinationPathSchema,
     UpdateDestinationRequestSchema,
     type UpdateDestinationResponse
 } from '../dto/2030.updateDestination.dto.ts'
-import { db } from '../db/destination.db.ts'
 
 export const updateDestinationHandlers = factory.createHandlers(
-    validator('param', UpdateDestinationPathSchema),
-    validator('json', UpdateDestinationRequestSchema),
+    zValidator('param', UpdateDestinationPathSchema),
+    zValidator('json', UpdateDestinationRequestSchema),
     jwtAuth,
     async (c) => {
-        const { destinationId } = (c.req.valid('param'))
-        const data = c.req.valid('json')
-        if (!((Object.keys(data)).length > 0)) { throw new HTTPException(400, { message: '至少輸入一個欄位' }) }
-
         try {
-            const updated = await db.update(
-                c.get('jwtPayload').id,
-                Number(destinationId),
-                data
+            const { destinationId } = (c.req.valid('param'))
+            const [exist] = await drizzleORM
+                .select({ count: count() })
+                .from(schema.destination)
+                .where(
+                    and(
+                        eq(schema.destination.id, Number(destinationId)),
+                        eq(schema.destination.user_id, c.get('jwtPayload').id)
+                    )
+                )
+            if (exist?.count !== 1) { throw new HTTPException(400, { message: '該資料不存在' }) }
+
+            const data = c.req.valid('json')
+            if (!((Object.keys(data)).length > 0)) { throw new HTTPException(400, { message: '至少輸入一個屬性' }) }
+
+            const original = await drizzleORM.select().from(schema.destination).where(
+                and(
+                    eq(schema.destination.id, Number(destinationId)),
+                    eq(schema.destination.user_id, c.get('jwtPayload').id)
+                )
             )
-            if (updated.length === 0) throw new HTTPException(404, { message: '資料不存在' })
-            return c.json({
-                success: true,
-                updatedId: updated.map(d => d.destinationId)
-            })
+
+            const [updated] = await drizzleORM
+                .update(schema.destination)
+                .set(data)
+                .where(
+                    and(
+                        eq(schema.destination.id, Number(destinationId)),
+                        eq(schema.destination.user_id, c.get('jwtPayload').id),
+                        eq(schema.destination.status, 'active')
+                    )
+                )
+                .returning({
+                    destinationId: schema.destination.id,
+                    name: schema.destination.name,
+                    isDepot: schema.destination.is_depot,
+                    comment: schema.destination.comment,
+                    timeWindow: schema.destination.time_window,
+                    address: schema.destination.address,
+                    location: schema.destination.location,
+                    operationTime: schema.destination.operation_time,
+                    demand: schema.destination.demand,
+                    priority: schema.destination.priority,
+                    info: schema.destination.info,
+                })
+            
+            return c.json({ success: true, newData: updated })
         } catch (e: any) {
             if (e instanceof HTTPException) throw e
-            else throw new HTTPException(500, { message: '資料庫錯誤', cause: e.message })
+            else throw new HTTPException(500, { message: '哈哈', cause: e.message })
         }
     }
 )
