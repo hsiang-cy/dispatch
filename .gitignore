@@ -4,3 +4,4 @@ dist
 .env.test
 .vscode
 z.sh
+CLAUDE.MD

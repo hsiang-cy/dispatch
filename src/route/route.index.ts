@@ -16,3 +16,7 @@ export {
     vehicleRoute
 } from "./vehicle/index.ts";
 
+export {
+    orderRoute,
+    orderOpenApiPath
+} from "./order/index.ts";
