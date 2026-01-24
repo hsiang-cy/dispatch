@@ -101,6 +101,9 @@ export const orders = pgTable('orders', {
     scheduled_time: timestamp('scheduled_time').notNull(),
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }),
+    destination_snapshot: jsonb('destination_snapshot').$type<DestinationSnapshot>().notNull(),  // 建立訂單時地點的快照
+    vehicle_snapshot: jsonb('vehicle_snapshot').$type<VehicleSnapshot>().notNull(),          // 建立訂單時車輛的快照
+
     info: jsonb('info'),
 }, (table) => ([
     index().on(table.user_id),
@@ -120,8 +123,8 @@ export const compute = pgTable('compute', {
     start_time: timestamp('start_time').defaultNow().notNull(),
     end_time: timestamp('end_time'),
     compute_policy: text('compute_policy').notNull(), // 計算策略描述
-    destination_snapshot: jsonb('destination_snapshot').$type<DestinationSnapshot>().notNull(),  // 開始計算時地點的快照
-    vehicle_snapshot: jsonb('vehicle_snapshot').$type<VehicleSnapshot>().notNull(),          // 開始計算時車輛的快照
+    // destination_snapshot: jsonb('destination_snapshot').$type<DestinationSnapshot>().notNull(),  // 開始計算時地點的快照
+    // vehicle_snapshot: jsonb('vehicle_snapshot').$type<VehicleSnapshot>().notNull(),          // 開始計算時車輛的快照
 
     result: jsonb('result').$type<ComputeResult>(), // 計算結果
     fail_reason: jsonb('fail_reason'), // 失敗原因描述
