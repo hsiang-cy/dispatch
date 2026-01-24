@@ -4,7 +4,8 @@ import {
   loginOpenApiPath,
   changePasswordOpenApiPath,
   destinationRoute,
-  destinationOpenApiPath
+  destinationOpenApiPath,
+  orderOpenApiPath
   // updateDestinationOpenApiPath,
   // deleteDestinationOpenApiPath
 } from '#route/route.index.ts'
@@ -25,7 +26,10 @@ export const openApiDoc: ReturnType<typeof createDocument> = createDocument({
     // ...changePasswordOpenApiPath,
 
     // destination
-    ...destinationOpenApiPath
+    ...destinationOpenApiPath,
+
+    // order
+    ...orderOpenApiPath
 
   },
   components: {
