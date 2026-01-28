@@ -11,7 +11,8 @@ import { Scalar } from '@scalar/hono-api-reference'
 import {
     userRoute,
     vehicleRoute,
-    destinationRoute
+    destinationRoute,
+    orderRoute
 } from '#route/route.index.ts'
 
 // 測試資料庫連線
@@ -36,6 +37,9 @@ const app: BlankEnv = new Hono()
 
     // destination route
     .route('/api/destination', destinationRoute)
+
+    // order route
+    .route('/api/order', orderRoute)
 
 
     // jwt test
