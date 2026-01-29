@@ -14,7 +14,7 @@
     "#root/*": "./src/*"
   },
   "scripts": {
-    "dev": "bun --hot src/index.ts",
+    "dev": "bun --watch src/index.ts",
     "type": "bunx tsc --watch",
     "generate": "drizzle-kit generate --config=src/db/drizzle.config.ts",
     "migrate": "drizzle-kit migrate --config=src/db/drizzle.config.ts",
