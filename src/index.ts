@@ -24,7 +24,8 @@ try {
     process.exit(1)
 }
 
-const app: BlankEnv = new Hono()
+// const app: BlankEnv = new Hono()
+const app = new Hono()
     .get('/test', (c) => c.text('test succesful'))
 
     .onError((err, c) => errorControl(err, c))
@@ -49,6 +50,11 @@ const app: BlankEnv = new Hono()
     .get('/scalar', Scalar({ url: '/doc', theme: 'purple' }))
     .get('/stoplight', (c) => { return c.html(stoplight); })
 
-export default app
+const server = Bun.serve({
+    port: 3000,
+    hostname: "0.0.0.0",  // 綁定所有網路介面
+
+    fetch: app.fetch,
+})
 console.log('http://localhost:3000/scalar')
 console.log('http://localhost:3000/stoplight')
