@@ -8,7 +8,8 @@ import {
     boolean,
     pgEnum,
     index,
-    unique
+    unique,
+    uuid
 } from 'drizzle-orm/pg-core';
 
 import { sql } from 'drizzle-orm';
@@ -169,6 +170,14 @@ export const order_vehicles = pgTable('order_vehicles', {
     index().on(table.order_id),
     index().on(table.vehicle_id),
 ]));
+
+export const point_distance = pgTable('point_distance', {
+    id: uuid('id').default(sql`uuidv7()`).primaryKey(), // 測試 uuidv7
+    aPoint: integer('a_point').references((() => destination.id)),
+    bPoint: integer('a_point').references((() => destination.id)),
+    distanceFromAToB:integer('distance_from_a_b').notNull()
+})
+
 
 export type ComputeResult = {
     total_distance: number,
