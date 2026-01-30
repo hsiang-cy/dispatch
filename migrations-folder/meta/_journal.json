@@ -43,6 +43,13 @@
       "when": 1769266927534,
       "tag": "0005_great_carnage",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1769775448865,
+      "tag": "0006_mixed_risque",
+      "breakpoints": true
     }
   ]
 }
